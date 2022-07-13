@@ -1,4 +1,4 @@
-:: example poke: :cue &cue-action [%add 1 'test entry' ~.tagtest ~.link %.n %.n]
+:: *** example poke: :cue &cue-action [%add 1 'test entry' ~.tagtest ~.link %.n %.n]
 /-  *cue
 /+  default-agent, dbug, agentio
 |%
