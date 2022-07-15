@@ -39,4 +39,6 @@
 :: Types for our agent's state
 +$  items  ((mop id item) gth)
 +$  log  ((mop @ action) lth)
+++  i-orm  ((on id item) gth)       :: streamlines mop functions
+++  log-orm  ((on @ action) lth)
 --

@@ -7,8 +7,6 @@
     ==
 +$  state-0  [%0 =items =log]
 +$  card  card:agent:gall
-++  i-orm  ((on id item) gth)
-++  log-orm  ((on @ action) lth)
 ++  unique-time
   |=  [=time =log]
   ^-  @
@@ -115,16 +113,11 @@
       !>  ^-  update
       [now %cue (tap:i-orm (lot:i-orm items `end `start))]
     ::
-::        [%has @ta ~]                            :: has particular tag
-::    =/  searched=@ta
-::    ?.  (any:i-orm items |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] =(tags searched))) :: do +any of the item values have the tag we are looking for?
-      :: no, fail and give message 
-      :: yes, check are we at the end of the map? (recurse to here)
-         :: if yes, give list
-         :: if no, check if id we are looking at has a tag that matches the specified tag
-            :: if yes, add [id item] to list, move to next item and recurse
-            :: if no, move to next item and recurse
-
+        [%has @ta ~]                            :: has particular tag
+      =/  searched=@ta  (rash i.t.t.t.path dem)
+      :^  ~  ~  %cue-update
+      !>  ^-  update
+      [now %cue (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(=(tags.v searched) ~ (some [k v]))))] :: make list of items that have tag
     ==
     ::
        [%x %updates *]
