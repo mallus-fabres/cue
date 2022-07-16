@@ -1,11 +1,11 @@
 |%
-:: Defines the types of each part of an item to match rss 2.0 item spec plus items for cue use
+:: Defines the types of each part of an item to match rss 2.0 item spec plus items for cue use.
 ::
-+$  id  @                :: cue id
++$  id  @                  :: cue id
 +$  title  @t
 ::+$  thumbnail  @t        :: url for thumbnail or embed
-+$  tags  @ta      :: cue tags for sorting
-+$  link  @ta             :: url of the item
++$  tags  @ta              :: cue tags for sorting
++$  link  @ta              :: url of the item
 ::+$  description  @t      :: synopsis preview or poster commentary
 ::+$  author  @t           :: email address of the author
 ::+$  patp  @p             :: @p of the author
@@ -20,11 +20,11 @@
 ::
 :: Poke actions
 +$  action
-  $%  [%add =id =item]
-      [%edit =id =item]
-      [%del =id]
-      [%read =id]
-      [%publish =id]
+  $%  [%add =id =item]     :: add new item
+      [%edit =id =item]    :: overwrite item
+      [%del =id]           :: delete item
+      [%read =id]          :: toggle read/unread marker
+      [%publish =id]       :: toggle public/private marker
   ==
 :: Types for updates to subscribers or returned via scries
 ::
@@ -38,7 +38,7 @@
 ::
 :: Types for our agent's state
 +$  items  ((mop id item) gth)
-+$  log  ((mop @ action) lth)
++$  log  ((mop @ action) lth)       :: changelog that will allegedly be useful later
 ++  i-orm  ((on id item) gth)       :: streamlines mop functions
-++  log-orm  ((on @ action) lth)
+++  log-orm  ((on @ action) lth)    :: streamlines mop functions
 --

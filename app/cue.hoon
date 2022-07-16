@@ -89,6 +89,7 @@
   ^-  (unit (unit cage))
   :: ?>  (team:title our.bowl src.bowl)
   =/  now=@  (unm:chrono:userlib now.bowl)
+  =/  eny=@uvJ  eny.bowl
   ?+    path  (on-peek:def path)
         [%x %all *]
     ?+    t.t.path  (on-peek:def path)
@@ -113,12 +114,21 @@
       !>  ^-  update
       [now %cue (tap:i-orm (lot:i-orm items `end `start))]
     ::
-        [%has @ta ~]                            :: has particular tag
+        [%has @ta ~]                            :: list of items that have a particular tag
       =/  searched=@ta  (rash i.t.t.t.path dem)
       :^  ~  ~  %cue-update
       !>  ^-  update
-      [now %cue (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(=(tags.v searched) ~ (some [k v]))))] :: make list of items that have tag
-    ==
+      [now %cue (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(=(tags.v searched) ~ (some [k v]))))]  :: see murn docs
+    ::
+        [%random ~]                             :: gives a random unread item
+      =/  rng  ~(. og eny)                      :: random number generator
+      =/  unread  (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(done.v ~ (some [k v])))) :: list of unread items
+      =/  val  (rad:rng (lent unread))          :: gets a random number between 0 and the length of the list generated on the next line
+      =/  randomitem  (snag val unread)
+      :^  ~  ~  %cue-update
+      !>  ^-  update
+      [now %cue `(list i=@ t=[title=@t tags=@ta link=@ta done=? public=?])`[-:randomitem +:randomitem]]  :: have tried 100 things to resolve this have/need
+    ==                                          :: this is the end marker for the ?+ on line 94
     ::
        [%x %updates *]
     ?+    t.t.path  (on-peek:def path)
@@ -132,8 +142,8 @@
       :^  ~  ~  %cue-update
       !>  ^-  update
       [now %logs (tap:log-orm (lot:log-orm log `since ~))]
-    ==
-  ==
+    ==                                          :: marker for line 133
+  ==                                            :: marker for line 92
 ::
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def
