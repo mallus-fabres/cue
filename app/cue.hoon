@@ -30,10 +30,10 @@
   ^-  vase
   !>(state)
 ::
-++  on-load  _`this :: to nuke old state if vase changes in dev IF PROD CHANGE TYPE VERSION PROPERLY
-::  |=  old-vase=vase
-::  ^-  (quip card _this)
-::  `this(state !<(versioned-state old-vase))
+++  on-load  ::_`this :: to nuke old state if vase changes in dev IF PROD CHANGE TYPE VERSION PROPERLY
+  |=  old-vase=vase
+  ^-  (quip card _this)
+  `this(state !<(versioned-state old-vase))
 ::
 ++  on-poke
   |=  [=mark =vase]
@@ -45,7 +45,7 @@
   =/  act  !<(action vase)
   =.  state  (poke-action act)
   :_  this(log (put:log-orm log now act))
-  ~[(fact:io cue-update+!>(`update`[now act]) ~[/updates])]
+  ~[(fact:io cue-update+!>(`update`[now act]) ~[/updates])] :: how to remove read from updates?
   ::
   ++  poke-action
     |=  act=action
@@ -114,21 +114,24 @@
       !>  ^-  update
       [now %cue (tap:i-orm (lot:i-orm items `end `start))]
     ::
-        [%has @ta ~]                            :: list of items that have a particular tag
+        [%has @ta ~]                             :: list of items that have a particular tag
       =/  searched=@ta  (rash i.t.t.t.path dem)
       :^  ~  ~  %cue-update
       !>  ^-  update
-      [now %cue (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(=(tags.v searched) ~ (some [k v]))))]  :: see murn docs
+      [now %cue (murn (tap:i-orm items) |=([k=@ v=item] ?.(=(tags.v searched) ~ `[k v])))]
     ::
-        [%random ~]                             :: gives a random unread item
-      =/  rng  ~(. og eny)                      :: random number generator
-      =/  unread  (murn (tap:i-orm items) |=([k=@ v=[title=@t tags=@ta link=@ta done=? public=?]] ?.(done.v ~ (some [k v])))) :: list of unread items
-      =/  val  (rad:rng (lent unread))          :: gets a random number between 0 and the length of the list generated on the next line
-      =/  randomitem  (snag val unread)
+        [%random ~]                              :: gives a random unread item
+      =/  rng  ~(. og eny)                       :: random number generator
+      =/  unread=(list [key=@ item])             :: creates list of unread items
+        %+  murn  (tap:i-orm items) 
+        |=  [k=@ v=item] 
+        ?.(done.v ~ `[k v]) :: list of unread items
+      =/  val  (rad:rng (lent unread))           :: gets a random number between 0 and the length of the list
+      =/  randomitem=[@ item]  (snag val unread) :: gets random item from list of unread items
       :^  ~  ~  %cue-update
       !>  ^-  update
-      [now %cue `(list i=@ t=[title=@t tags=@ta link=@ta done=? public=?])`[-:randomitem +:randomitem]]  :: have tried 100 things to resolve this have/need
-    ==                                          :: this is the end marker for the ?+ on line 94
+      [now %cue [randomitem ~]]
+    ==                                           :: this is the end marker for the ?+ on line 94
     ::
        [%x %updates *]
     ?+    t.t.path  (on-peek:def path)

@@ -33,7 +33,7 @@
   %+  pair  @
   $%  action
       [%cue list=(list citem)]
-      [%logs list=(list logged)]
+      [%logs list=(list logged)]    :: is these even necessary for p2p sharing? Yes except for read?
   ==
 ::
 :: Types for our agent's state
