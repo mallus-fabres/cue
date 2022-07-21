@@ -18,10 +18,10 @@
   ^-  json
   |^
   ?+    -.q.upd  (logged upd)
-      %jrnl
+      %cue
     %-  pairs
     :~  ['time' (numb p.upd)]
-        ['entries' a+(turn list.q.upd entry)]
+        ['item' a+(turn list.q.upd citem)]
     ==
   ::
       %logs
@@ -30,12 +30,16 @@
         ['logs' a+(turn list.q.upd logged)]
     ==
   ==
-  ++  entry
-    |=  ent=^entry
+  ++  item
+    |=  it=^item
     ^-  json
     %-  pairs
-    :~  ['id' (numb id.ent)]
-        ['title' s+title.ent]
+    :~  ['id' (numb id.it)]
+        ['title' s+title.it]
+        ['tags' tags.it]
+        ['link' link.it]
+        ['done' done.it]
+        ['share' public.it]
     ==
   ++  logged
     |=  lgd=^logged

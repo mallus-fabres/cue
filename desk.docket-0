@@ -1,0 +1,10 @@
+:~
+  title+'cue'
+  info+'Urbit native bookmarks'
+  color+0xb8.d0d5
+  version+[0 0 1]
+  website+'web+urbitgraph://group/~mallus-fabres/cue'
+  license+'MIT'
+  base+'cue'
+  glob-ames+[~zod 0v0]
+==
