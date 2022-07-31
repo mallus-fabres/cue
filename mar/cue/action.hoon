@@ -1,8 +1,10 @@
 /-  *cue
+/+  *cue
 |_  act=action
 ++  grab
   |%
   ++  noun  action
+  ++  json  dejs-action
   --
 ++  grow
   |%

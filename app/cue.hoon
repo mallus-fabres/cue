@@ -91,7 +91,7 @@
   =/  now=@  (unm:chrono:userlib now.bowl)
   =/  eny=@uvJ  eny.bowl
   ?+    path  (on-peek:def path)
-        [%x %all *]
+        [%x %entries *]
     ?+    t.t.path  (on-peek:def path)
         [%all ~]                               :: all public items
       :^  ~  ~  %cue-update

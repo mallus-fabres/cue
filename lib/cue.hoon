@@ -30,17 +30,19 @@
         ['logs' a+(turn list.q.upd logged)]
     ==
   ==
-  ++  item
-    |=  it=^item
+  ++  citem
+    |=  it=^citem
     ^-  json
     %-  pairs
     :~  ['id' (numb id.it)]
-        ['title' s+title.it]
-        ['tags' tags.it]
-        ['link' link.it]
-        ['done' done.it]
-        ['share' public.it]
-    ==
+        :-  'item'
+        %-  pairs
+        :~  ['title' s+title.item]  :: this is correct
+            ['tags' tags.item]
+            ['link' link.item]
+            ['done' b+done.item]
+            ['share' b+public.item]
+    ==  ==
   ++  logged
     |=  lgd=^logged
     ^-  json
