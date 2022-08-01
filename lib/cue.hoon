@@ -31,20 +31,20 @@
     ==
   ==
   ++  citem
-    |=  it=^citem
+    |=  [=id =item]
     ^-  json
     %-  pairs
-    :~  ['id' (numb id.it)]
+    :~  ['id' (numb id)]
         :-  'item'
         %-  pairs
-        :~  ['title' s+title.item]  :: this is correct
-            ['tags' tags.item]
-            ['link' link.item]
+        :~  ['title' s+title.item]
+            ['tags' s+tags.item]
+            ['link' s+link.item]
             ['done' b+done.item]
             ['share' b+public.item]
     ==  ==
   ++  logged
-    |=  lgd=^logged
+    |=  lgd=(pair @ action)
     ^-  json
     ?-    -.q.lgd
         %add
@@ -52,8 +52,14 @@
       :~  ['time' (numb p.lgd)]
           :-  'add'
           %-  pairs
-          :~  ['id' (numb id.q.lgd)]
-              ['title' s+title.q.lgd]
+          :~  ['id' (numb id)]  :: this is incorrect
+              :-  'item'
+              %-  pairs
+                  ['title' s+title.item]
+                  ['tags' s+tags.item]
+                  ['link' s+link.item]
+                  ['done' b+done.item]
+                  ['share' b+public.item]
       ==  ==
         %edit
       %-  pairs
