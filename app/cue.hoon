@@ -1,6 +1,6 @@
 :: *** example poke: :cue &cue-action [%add 1 'test entry' ~.tagtest ~.link %.n %.n]
 /-  *cue
-/+  default-agent, dbug, agentio
+/+  default-agent, dbug, agentio, etch
 |%
 +$  versioned-state
     $%  state-0
@@ -72,7 +72,7 @@
        %publish                                         :: toggle public/private
           ?~  item=(get:i-orm items id.act)
           state
-        state(items (put:i-orm items id.act u.item(public !public.u.item)))
+        state(items (put:i-orm items id.act u.item(share !share.u.item)))
     ==
   --
 ::
@@ -93,15 +93,19 @@
   ?+    path  (on-peek:def path)
         [%x %entries *]
     ?+    t.t.path  (on-peek:def path)
-        [%all ~]                               :: all public items
-      :^  ~  ~  %cue-update
+        [%all ~]                               :: all items
+      :^  ~  ~  %json                          :: invokes etch to converte update to json instead of using grow bc enjs sucks thanks ~lw
+      !>                                       :: this uses a double vase bc etch eats the first one aka it vases the etch output
+      %-  en-vase:etch
       !>  ^-  update
       [now %cue (tap:i-orm items)]             :: this is producting a list
     ::
         [%before @ @ ~]                        :: n items before date
       =/  before=@  (rash i.t.t.t.path dem)
       =/  max=@  (rash i.t.t.t.t.path dem)
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %cue (tab:i-orm items `before max)]
     ::
@@ -110,13 +114,17 @@
         =+  (rash i.t.t.t.path dem)
         ?:(=(0 -) - (sub - 1))
       =/  end=@  (add 1 (rash i.t.t.t.t.path dem))
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %cue (tap:i-orm (lot:i-orm items `end `start))]
     ::
         [%has @ta ~]                             :: list of items that have a particular tag
       =/  searched=@ta  (rash i.t.t.t.path dem)
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %cue (murn (tap:i-orm items) |=([k=@ v=item] ?.(=(tags.v searched) ~ `[k v])))]
     ::
@@ -128,7 +136,9 @@
         ?.(done.v ~ `[k v]) :: list of unread items
       =/  val  (rad:rng (lent unread))           :: gets a random number between 0 and the length of the list
       =/  randomitem=[@ item]  (snag val unread) :: gets random item from list of unread items
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %cue [randomitem ~]]
     ==                                           :: this is the end marker for the ?+ on line 94
@@ -136,13 +146,17 @@
        [%x %updates *]
     ?+    t.t.path  (on-peek:def path)
         [%all ~]
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %logs (tap:log-orm log)]
     ::
         [%since @ ~]
       =/  since=@  (rash i.t.t.t.path dem)
-      :^  ~  ~  %cue-update
+      :^  ~  ~  %json
+      !>
+      %-  en-vase:etch
       !>  ^-  update
       [now %logs (tap:log-orm (lot:log-orm log `since ~))]
     ==                                          :: marker for line 133

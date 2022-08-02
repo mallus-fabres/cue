@@ -15,7 +15,7 @@
 ::+$  guid  @t             :: global ID from RSS item, often same as link
 ::+$  pubdate  @t
 ::+$  source  @t           :: RSS channel source URL
-+$  item  [=title =tags =link done=? public=?]     :: item is the content of each entry without the id; done is bool for read/unread. re-add other parts after testing
++$  item  [=title =tags =link done=? share=?]     :: item is the content of each entry without the id; done is bool for read/unread. re-add other parts after testing
 +$  citem  [=id =item]              :: citem is item + ID for agent purposes. In 6mos I will think this is really dumb I'm sure
 ::
 :: Poke actions
