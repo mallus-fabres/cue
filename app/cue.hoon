@@ -81,7 +81,7 @@
   ^-  (quip card _this)
 ::  ?>  (team:title our.bowl src.bowl)        :: local only
   ?+  path  (on-watch:def path)
-    [%updates ~]  `this
+    [%update ~]  `this
   ==
 ::
 ++  on-peek
