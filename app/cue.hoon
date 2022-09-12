@@ -120,8 +120,8 @@
       !>  ^-  update
       [now %cue (tap:i-orm (lot:i-orm items `end `start))]
     ::
-        [%has @ta ~]                             :: list of items that have a particular tag
-      =/  searched=@ta  (rash i.t.t.t.path dem)
+        [%has @ ~]                             :: list of items that have a particular tag
+      =/  searched  `@ta`(slav %ta i.t.t.t.path)
       :^  ~  ~  %json
       !>
       %-  en-vase:etch
