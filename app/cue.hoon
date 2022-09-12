@@ -129,12 +129,11 @@
       [now %cue (murn (tap:i-orm items) |=([k=@ v=item] ?.(=(tags.v searched) ~ `[k v])))]
     ::
         [%random ~]                              :: gives a random unread item
-      =/  rng  ~(. og eny)                       :: random number generator
       =/  unread=(list [key=@ item])             :: creates list of unread items
         %+  murn  (tap:i-orm items) 
         |=  [k=@ v=item] 
-        ?.(done.v ~ `[k v]) :: list of unread items
-      =/  val  (rad:rng (lent unread))           :: gets a random number between 0 and the length of the list
+        ?:(done.v ~ `[k v]) :: list of unread items
+      =/  val  (~(rad og now) (lent unread))           :: gets a random number between 0 and the length of the list
       =/  randomitem=[@ item]  (snag val unread) :: gets random item from list of unread items
       :^  ~  ~  %json
       !>
