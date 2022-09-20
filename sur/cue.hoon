@@ -5,7 +5,7 @@
 +$  title  @t
 ::+$  thumbnail  @t        :: url for thumbnail or embed
 +$  tags  @ta              :: cue tags for sorting
-+$  link  @ta              :: url of the item
++$  link  @t              :: url of the item
 ::+$  description  @t      :: synopsis preview or poster commentary
 ::+$  author  @t           :: email address of the author
 ::+$  patp  @p             :: @p of the author
